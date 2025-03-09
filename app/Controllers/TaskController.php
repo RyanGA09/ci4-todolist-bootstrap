@@ -13,32 +13,42 @@ class TaskController extends Controller
         $taskModel = new TaskModel();
         $categoryModel = new CategoryModel();
         
-        $data['tasks'] = $taskModel->getTasks();
-        $data['categories'] = $categoryModel->findAll();
-        
+        $data = [
+            'tasks' => $taskModel->getTasks(),
+            'categories' => $categoryModel->findAll()
+        ];
+
         return view('tasks/index', $data);
     }
 
     public function create()
     {
         $taskModel = new TaskModel();
-        
-        $taskModel->insert([
+
+        $data = [
             'title'       => $this->request->getPost('title'),
             'description' => $this->request->getPost('description'),
             'due_date'    => $this->request->getPost('due_date'),
             'status'      => $this->request->getPost('status'),
-            'category_id' => $this->request->getPost('category_id')
-        ]);
+            'category_id' => $this->request->getPost('category_id'),
+            'created_at'  => date('Y-m-d H:i:s')
+        ];
 
-        return redirect()->to('/tasks');
+        $taskModel->insert($data);
+
+        return redirect()->to('/tasks')->with('success', 'Task berhasil ditambahkan.');
     }
 
     public function delete($id)
     {
         $taskModel = new TaskModel();
-        $taskModel->delete($id);
+        $task = $taskModel->find($id);
 
-        return redirect()->to('/tasks');
+        if ($task) {
+            $taskModel->delete($id);
+            return redirect()->to('/tasks')->with('success', 'Task berhasil dihapus.');
+        }
+
+        return redirect()->to('/tasks')->with('error', 'Task tidak ditemukan.');
     }
 }

@@ -25,7 +25,7 @@
                     <td><?= esc($task['status']) ?></td>
                     <td><?= esc($task['category_name']) ?></td>
                     <td>
-                        <button class="btn btn-danger btn-sm" onclick="deleteTask(<?= $task['id'] ?>)">Hapus</button>
+                        <button class="btn btn-danger btn-sm delete-task" data-id="<?= $task['id'] ?>">Hapus</button>
                     </td>
                 </tr>
             <?php endforeach; ?>

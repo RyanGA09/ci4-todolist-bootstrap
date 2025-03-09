@@ -23,7 +23,7 @@ Used to store task categories.
 ```sql
 id (INT, PRIMARY KEY, AUTO_INCREMENT)
 name (VARCHAR 100, NOT NULL)
-created_at (TIMESTAMP, DEFAULT CURRENT_TIMESTAMP)
+created_at (DATETIME, DEFAULT CURRENT_TIMESTAMP)
 ```
 
 ### 2. **`tasks` Table**
@@ -37,7 +37,7 @@ description (TEXT, NULL)
 due_date (DATE, NOT NULL)
 status (ENUM('Not Completed', 'Completed'), DEFAULT 'Not Completed')
 category_id (INT, NULL, FOREIGN KEY to categories.id)
-created_at (TIMESTAMP, DEFAULT CURRENT_TIMESTAMP)
+created_at (DATETIME, DEFAULT CURRENT_TIMESTAMP)
 ```
 
 ## ⚙️ Installation & Configuration
@@ -86,13 +86,13 @@ created_at (TIMESTAMP, DEFAULT CURRENT_TIMESTAMP)
 6. **Start the application**
 
    ```sh
-       php spark serve
+   php spark serve
    ```
 
 7. **Access via browser**
 
-   ```
-           http://localhost:8080
+   ```sh
+   http://localhost:8080
    ```
 
 ## ✨ Features
@@ -109,7 +109,9 @@ The application uses Bootstrap 5 for a modern and responsive design.
 
 ## 📜 License
 
-This project is open-source and free to use.
+[MIT LICENSE](LICENSE)
+
+&copy;2025 Ryan Gading Abdullah. All rights reserved.
 
 ---
 
