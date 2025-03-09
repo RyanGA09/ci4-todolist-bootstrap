@@ -8,6 +8,7 @@ class DatabaseSeeder extends Seeder
 {
     public function run()
     {
+        $this->call(PrioritySeeder::class); // Tambahkan seeder ini lebih dahulu
         $this->call(CategorySeeder::class);
         $this->call(TaskSeeder::class);
         $this->call(SubtaskSeeder::class);

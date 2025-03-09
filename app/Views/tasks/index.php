@@ -9,9 +9,12 @@
         <tr>
             <th>Judul</th>
             <th>Deskripsi</th>
+            <th>Dibuat pada</th>
             <th>Deadline</th>
             <th>Status</th>
             <th>Kategori</th>
+            <th>Prioritas</th>
+            <th>Subtasks</th> <!-- Tambahkan kolom -->
             <th>Aksi</th>
         </tr>
     </thead>
@@ -20,9 +23,18 @@
             <tr>
                 <td><?= esc($task['title']) ?></td>
                 <td><?= esc($task['description']) ?></td>
+                <td><?= esc($task['created_at']) ?></td>
                 <td><?= esc($task['due_date']) ?></td>
                 <td><?= esc($task['status']) ?></td>
                 <td><?= esc($task['category_name']) ?></td>
+                <td><?= esc($task['priority']) ?></td>
+                <td>
+                    <ul>
+                        <?php foreach ($task['subtasks'] as $subtask): ?>
+                            <li><?= esc($subtask['title']) ?> (<?= esc($subtask['status']) ?>)</li>
+                        <?php endforeach; ?>
+                    </ul>
+                </td>
                 <td>
                     <button class="btn btn-warning btn-sm edit-task" data-id="<?= $task['id'] ?>" data-bs-toggle="modal" data-bs-target="#editTaskModal">Edit</button>
                     <button class="btn btn-danger btn-sm delete-task" data-id="<?= $task['id'] ?>" data-bs-toggle="modal" data-bs-target="#deleteTaskModal">Hapus</button>

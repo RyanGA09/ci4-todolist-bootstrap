@@ -27,7 +27,8 @@ class CreateTasks extends Migration
                 'type' => 'TINYINT',
                 'constraint' => 1,
                 'null' => false,
-                'default' => 3 // Default prioritas 3 (menengah)
+                'default' => 3, // Default prioritas 3 (Menengah)
+                'unsigned' => true
             ],
             'created_at' => [
                 'type' => 'DATETIME', 
@@ -48,8 +49,11 @@ class CreateTasks extends Migration
             ]
         ]);
 
-        $this->forge->addKey('id', true);
+        // Tambahkan foreign key agar priority hanya bisa bernilai 1-5 dari tabel priorities
+        $this->forge->addForeignKey('priority', 'priorities', 'id', 'CASCADE', 'RESTRICT');
         $this->forge->addForeignKey('category_id', 'categories', 'id', 'CASCADE', 'SET NULL');
+        
+        $this->forge->addKey('id', true);
         $this->forge->createTable('tasks');
     }
 

@@ -33,3 +33,25 @@
     <?php endif; ?>
 </body>
 </html>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const editTaskButtons = document.querySelectorAll(".edit-task");
+        editTaskButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                const id = this.getAttribute("data-id");
+                const title = this.getAttribute("data-title");
+                const description = this.getAttribute("data-description");
+                const due_date = this.getAttribute("data-due_date");
+                const status = this.getAttribute("data-status");
+
+                // Mengisi form modal edit
+                document.querySelector("#editTaskModal input[name='id']").value = id;
+                document.querySelector("#editTaskModal input[name='title']").value = title;
+                document.querySelector("#editTaskModal textarea[name='description']").value = description;
+                document.querySelector("#editTaskModal input[name='due_date']").value = due_date;
+                document.querySelector("#editTaskModal select[name='status']").value = status;
+            });
+        });
+    });
+</script>

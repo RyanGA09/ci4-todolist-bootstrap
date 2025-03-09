@@ -8,11 +8,14 @@ class TaskSeeder extends Seeder
 {
     public function run()
     {
+        // Pastikan tabel priorities memiliki data terlebih dahulu
+        $this->call(PrioritySeeder::class);
+
         $tasks = [
             [
                 'title'       => 'Menyelesaikan laporan',
                 'description' => 'Menyusun laporan keuangan bulanan',
-                'priority'    => 1, // Prioritas tertinggi
+                'priority'    => 1, // Prioritas tertinggi (Sangat Rendah)
                 'created_at'  => date('Y-m-d H:i:s'),
                 'due_date'    => date('Y-m-d H:i:s', strtotime('+3 days')), // Tenggat 3 hari
                 'status'      => 'Not Completed',
@@ -30,10 +33,10 @@ class TaskSeeder extends Seeder
             [
                 'title'       => 'Olahraga Pagi',
                 'description' => 'Jogging selama 30 menit di taman',
-                'priority'    => 5, // Prioritas rendah
+                'priority'    => 5, // Prioritas tertinggi (Sangat Tinggi)
                 'created_at'  => date('Y-m-d H:i:s'),
                 'due_date'    => date('Y-m-d H:i:s', strtotime('+1 days')), // Tenggat 1 hari
-                'status'      => 'Completed',
+                'status'      => 'Not Completed',
                 'category_id' => 3
             ]
         ];
