@@ -26,10 +26,15 @@ class TaskController extends ResourceController
 
     public function index()
     {
-        $tasks = $this->taskModel->select('tasks.*, categories.name as category_name, priorities.priority_level as priority_level, priorities.description as priority_description')
+        $tasks = $this->taskModel
+            ->select('tasks.*, categories.name as category_name, priorities.priority_level as priority_level, priorities.description as priority_description')
             ->join('categories', 'categories.id = tasks.category_id', 'left')
             ->join('priorities', 'priorities.id = tasks.priority_id', 'left')
             ->findAll();
+
+        foreach ($tasks as &$task) {
+            $task['subtasks'] = $this->subtaskModel->where('task_id', $task['id'])->findAll();
+        }
 
         $categories = $this->categoryModel->findAll();
         $priorities = $this->priorityModel->findAll();
@@ -38,7 +43,6 @@ class TaskController extends ResourceController
             'tasks' => $tasks,
             'categories' => $categories,
             'priorities' => $priorities,
-            'subtaskModel' => $this->subtaskModel // Tambahkan ini
         ]);
     }
 
@@ -58,8 +62,12 @@ class TaskController extends ResourceController
             return $this->failNotFound('Task not found');
         }
 
-        $task['subtasks'] = $this->subtaskModel->where('task_id', $id)->findAll();
+        // Ambil data subtasks
+        $subtasks = $this->subtaskModel->where('task_id', $id)->findAll();
         
+        // Jika tidak ada subtasks, kembalikan array kosong
+        $task['subtasks'] = !empty($subtasks) ? $subtasks : [];
+
         return $this->respond($task);
     }
 
@@ -79,7 +87,19 @@ class TaskController extends ResourceController
         }
 
         $data = $this->request->getPost();
-        if ($this->taskModel->insert($data)) {
+        if ($taskId = $this->taskModel->insert($data)) {
+            // Tambahkan subtasks jika ada
+            if (!empty($data['subtasks'])) {
+                foreach ($data['subtasks'] as $subtask) {
+                    if (!empty($subtask['title'])) {
+                        $this->subtaskModel->insert([
+                            'task_id' => $taskId,
+                            'title' => $subtask['title'],
+                            'status' => 'Not Completed'
+                        ]);
+                    }
+                }
+            }
             return redirect()->to('/tasks')->with('success', 'Task created successfully');
         }
         return $this->failValidationErrors($this->taskModel->errors());
@@ -106,6 +126,19 @@ class TaskController extends ResourceController
 
         $data = $this->request->getRawInput();
         if ($this->taskModel->update($id, $data)) {
+            // Hapus semua subtasks terkait dan tambahkan yang baru
+            $this->subtaskModel->where('task_id', $id)->delete();
+            if (!empty($data['subtasks'])) {
+                foreach ($data['subtasks'] as $subtask) {
+                    if (!empty($subtask['title'])) {
+                        $this->subtaskModel->insert([
+                            'task_id' => $id,
+                            'title' => $subtask['title'],
+                            'status' => $subtask['status'] ?? 'Not Completed'
+                        ]);
+                    }
+                }
+            }
             return redirect()->to('/tasks')->with('success', 'Task updated successfully');
         }
         return $this->failValidationErrors($this->taskModel->errors());

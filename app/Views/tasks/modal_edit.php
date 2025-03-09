@@ -1,4 +1,5 @@
-<div class="modal fade" id="editTaskModal" tabindex="-1">
+<!-- Modal Edit Tugas -->
+<div class="modal fade" id="editSubtaskList" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -21,29 +22,9 @@
                         <input type="datetime-local" name="due_date" id="editTaskDueDate" class="form-control" required>
                     </div>
                     <div class="mb-3">
-                        <label>Status</label>
-                        <select name="status" id="editTaskStatus" class="form-control">
-                            <option value="Not Completed">Belum Selesai</option>
-                            <option value="Completed">Selesai</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label>Kategori</label>
-                        <select name="category_id" id="editTaskCategory" class="form-control">
-                            <?php foreach ($categories as $category): ?>
-                                <option value="<?= $category['id'] ?>"><?= esc($category['name']) ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label>Prioritas</label>
-                        <select name="priority_id" id="editTaskPriority" class="form-control">
-                            <?php foreach ($priorities as $priority): ?>
-                                <option value="<?= $priority['id'] ?>">
-                                    <?= esc($priority['priority_level']) ?> - <?= esc($priority['description']) ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
+                        <label>Subtasks</label>
+                        <div id="editSubtasksContainer"></div>
+                        <button type="button" class="btn btn-secondary" onclick="addEditSubtask()">Tambah Subtask</button>
                     </div>
                     <button type="submit" class="btn btn-primary">Perbarui</button>
                 </form>

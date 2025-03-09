@@ -65,21 +65,33 @@
             let status = $(this).data("status");
             let category = $(this).data("category_id");
             let priority = $(this).data("priority_id");
+            let subtasks = $(this).data("subtasks");
 
             $("#editTaskId").val(id);
             $("#editTaskTitle").val(title);
             $("#editTaskDescription").val(description);
-
-            if (dueDate) {
-                let formattedDate = new Date(dueDate).toISOString().slice(0, 16);
-                $("#editTaskDueDate").val(formattedDate);
-            }
-
+            $("#editTaskDueDate").val(dueDate);
             $("#editTaskStatus").val(status);
+            $("#editTaskCategory").val(category);
+            $("#editTaskPriority").val(priority);
 
-            // Pastikan kategori dan prioritas di-set
-            $("#editTaskCategory").val(category).change();
-            $("#editTaskPriority").val(priority).change();
+            // Kosongkan daftar subtasks terlebih dahulu
+            $("#editSubtaskList").html("");
+
+            // Tambahkan subtasks ke modal edit
+            if (subtasks && subtasks.length > 0) {
+                subtasks.forEach((subtask, index) => {
+                    let subtaskHtml = `
+                        <div class="mb-2">
+                            <input type="text" name="subtasks[${index}][title]" class="form-control" value="${subtask.title}">
+                            <select name="subtasks[${index}][status]" class="form-control">
+                                <option value="Not Completed" ${subtask.status === 'Not Completed' ? 'selected' : ''}>Not Completed</option>
+                                <option value="Completed" ${subtask.status === 'Completed' ? 'selected' : ''}>Completed</option>
+                            </select>
+                        </div>`;
+                    $("#editSubtaskList").append(subtaskHtml);
+                });
+            }
         });
     });
 
@@ -97,4 +109,74 @@
             deleteForm.action = "/tasks/delete/" + taskId; 
         });
     });
+
+    let subtaskIndex = 1;
+    function addSubtask() {
+        const container = document.getElementById("subtasks-container");
+        const newSubtask = document.createElement("div");
+        newSubtask.classList.add("input-group", "mb-2");
+        newSubtask.innerHTML = `
+            <input type="text" name="subtasks[${subtaskIndex}][title]" class="form-control" placeholder="Subtask Title">
+            <button type="button" class="btn btn-danger" onclick="removeSubtask(this)">Hapus</button>
+        `;
+        container.appendChild(newSubtask);
+        subtaskIndex++;
+    }
+
+    function addEditSubtask() {
+        let index = $('#editSubtasksContainer .subtask-item').length;
+        let newSubtaskHtml = `
+            <div class="input-group mb-2 subtask-item">
+                <input type="text" name="subtasks[${index}][title]" class="form-control" placeholder="Subtask baru" required>
+                <select name="subtasks[${index}][status]" class="form-select">
+                    <option value="Not Completed" selected>Not Completed</option>
+                    <option value="Completed">Completed</option>
+                </select>
+                <button type="button" class="btn btn-danger" onclick="removeSubtask(this)">X</button>
+            </div>
+        `;
+        $('#editSubtasksContainer').append(newSubtaskHtml);
+    }
+
+    function loadEditModal(taskId) {
+        // Ambil data tugas dari server (gunakan AJAX)
+        $.ajax({
+            url: `/tasks/${taskId}`, // Endpoint untuk mendapatkan data task + subtasks
+            type: 'GET',
+            success: function(response) {
+                $('#editTaskId').val(response.id);
+                $('#editTaskTitle').val(response.title);
+                $('#editTaskDescription').val(response.description);
+                $('#editTaskDueDate').val(response.due_date);
+
+                // Kosongkan container subtasks sebelum menambahkan yang baru
+                $('#editSubtasksContainer').empty();
+
+                // Tampilkan subtasks yang sudah ada
+                response.subtasks.forEach((subtask, index) => {
+                    let subtaskHtml = `
+                        <div class="input-group mb-2 subtask-item">
+                            <input type="text" name="subtasks[${index}][title]" class="form-control" value="${subtask.title}" required>
+                            <select name="subtasks[${index}][status]" class="form-select">
+                                <option value="Not Completed" ${subtask.status === 'Not Completed' ? 'selected' : ''}>Not Completed</option>
+                                <option value="Completed" ${subtask.status === 'Completed' ? 'selected' : ''}>Completed</option>
+                            </select>
+                            <button type="button" class="btn btn-danger" onclick="removeSubtask(this)">X</button>
+                        </div>
+                    `;
+                    $('#editSubtasksContainer').append(subtaskHtml);
+                });
+
+                // Tampilkan modal edit
+                $('#editTaskModal').modal('show');
+            },
+            error: function() {
+                alert('Gagal mengambil data tugas');
+            }
+        });
+    }
+
+    function removeSubtask(button) {
+        button.parentElement.remove();
+    }
 </script>

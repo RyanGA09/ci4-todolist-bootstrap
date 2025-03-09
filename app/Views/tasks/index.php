@@ -37,15 +37,16 @@
                     </ul>
                 </td>
                 <td>
-                    <button class="btn btn-warning btn-sm edit-task" 
-                        data-id="<?= $task['id'] ?>" 
-                        data-title="<?= esc($task['title']) ?>" 
-                        data-description="<?= esc($task['description']) ?>" 
-                        data-due_date="<?= esc($task['due_date']) ?>" 
-                        data-status="<?= esc($task['status']) ?>" 
-                        data-category_id="<?= esc($task['category_id']) ?>" 
-                        data-priority_id="<?= esc($task['priority_id']) ?>" 
-                        data-bs-toggle="modal" data-bs-target="#editTaskModal">
+                    <button type="button" 
+                            class="btn btn-primary edit-task"
+                            data-id="<?= $task['id']; ?>"
+                            data-title="<?= $task['title']; ?>"
+                            data-description="<?= $task['description']; ?>"
+                            data-due_date="<?= $task['due_date']; ?>"
+                            data-status="<?= $task['status']; ?>"
+                            data-category_id="<?= $task['category_id']; ?>"
+                            data-priority_id="<?= $task['priority_id']; ?>"
+                            data-subtasks='<?= json_encode($task['subtasks']); ?>'>
                         Edit
                     </button>
                     <button class="btn btn-danger btn-sm delete-task" 
