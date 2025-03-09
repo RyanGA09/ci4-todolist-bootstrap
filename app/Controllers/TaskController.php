@@ -2,7 +2,11 @@
 
 namespace App\Controllers;
 
-use App\Models\{CategoryModel, TaskModel, SubtaskModel, PriorityModel};
+use App\Models\CategoryModel;
+use App\Models\TaskModel;
+use App\Models\SubtaskModel;
+use App\Models\PriorityModel;
+use CodeIgniter\Controller;
 use CodeIgniter\RESTful\ResourceController;
 
 class TaskController extends ResourceController
@@ -22,7 +26,7 @@ class TaskController extends ResourceController
 
     public function index()
     {
-        $tasks = $this->taskModel->select('tasks.*, categories.name as category_name, priorities.level as priority_level')
+        $tasks = $this->taskModel->select('tasks.*, categories.name as category_name, priorities.priority_level as priority_level, priorities.description as priority_description')
             ->join('categories', 'categories.id = tasks.category_id', 'left')
             ->join('priorities', 'priorities.id = tasks.priority_id', 'left')
             ->findAll();
@@ -33,7 +37,8 @@ class TaskController extends ResourceController
         return view('tasks/index', [
             'tasks' => $tasks,
             'categories' => $categories,
-            'priorities' => $priorities
+            'priorities' => $priorities,
+            'subtaskModel' => $this->subtaskModel // Tambahkan ini
         ]);
     }
 
@@ -43,7 +48,7 @@ class TaskController extends ResourceController
             return $this->failNotFound('Task ID is required');
         }
 
-        $task = $this->taskModel->select('tasks.*, categories.name as category_name, priorities.level as priority_level')
+        $task = $this->taskModel->select('tasks.*, categories.name as category_name, priorities.priority_level as priority_level')
             ->join('categories', 'categories.id = tasks.category_id', 'left')
             ->join('priorities', 'priorities.id = tasks.priority_id', 'left')
             ->where('tasks.id', $id)

@@ -14,7 +14,7 @@
             <th>Status</th>
             <th>Kategori</th>
             <th>Prioritas</th>
-            <th>Subtasks</th> <!-- Tambahkan kolom -->
+            <th>Subtasks</th>
             <th>Aksi</th>
         </tr>
     </thead>
@@ -27,17 +27,32 @@
                 <td><?= esc($task['due_date']) ?></td>
                 <td><?= esc($task['status']) ?></td>
                 <td><?= esc($task['category_name']) ?></td>
-                <td><?= esc($task['priority']) ?></td>
+                <td><?= esc($task['priority_level']) ?> - <?= esc($task['priority_description']) ?></td>
                 <td>
                     <ul>
-                        <?php foreach ($task['subtasks'] as $subtask): ?>
+                        <?php $subtasks = $subtaskModel->where('task_id', $task['id'])->findAll(); ?>
+                        <?php foreach ($subtasks as $subtask): ?>
                             <li><?= esc($subtask['title']) ?> (<?= esc($subtask['status']) ?>)</li>
                         <?php endforeach; ?>
                     </ul>
                 </td>
                 <td>
-                    <button class="btn btn-warning btn-sm edit-task" data-id="<?= $task['id'] ?>" data-bs-toggle="modal" data-bs-target="#editTaskModal">Edit</button>
-                    <button class="btn btn-danger btn-sm delete-task" data-id="<?= $task['id'] ?>" data-bs-toggle="modal" data-bs-target="#deleteTaskModal">Hapus</button>
+                    <button class="btn btn-warning btn-sm edit-task" 
+                        data-id="<?= $task['id'] ?>" 
+                        data-title="<?= esc($task['title']) ?>" 
+                        data-description="<?= esc($task['description']) ?>" 
+                        data-due_date="<?= esc($task['due_date']) ?>" 
+                        data-status="<?= esc($task['status']) ?>" 
+                        data-category_id="<?= esc($task['category_id']) ?>" 
+                        data-priority_id="<?= esc($task['priority_id']) ?>" 
+                        data-bs-toggle="modal" data-bs-target="#editTaskModal">
+                        Edit
+                    </button>
+                    <button class="btn btn-danger btn-sm delete-task" 
+                        data-id="<?= $task['id'] ?>" 
+                        data-bs-toggle="modal" data-bs-target="#deleteTaskModal">
+                        Hapus
+                    </button>
                 </td>
             </tr>
         <?php endforeach; ?>

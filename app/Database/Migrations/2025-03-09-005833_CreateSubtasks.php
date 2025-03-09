@@ -39,6 +39,7 @@ class CreateSubtasks extends Migration
         $this->forge->createTable('subtasks');
     }
 
+
     public function down()
     {
         $this->forge->dropTable('subtasks');
