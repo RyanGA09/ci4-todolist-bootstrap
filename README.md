@@ -1,24 +1,24 @@
 # Todo List - CodeIgniter 4
 
-## 📌 Deskripsi Proyek
+## 📌 Project Description
 
-Proyek ini adalah aplikasi Todo List sederhana yang dibuat menggunakan CodeIgniter 4. Aplikasi ini memungkinkan pengguna untuk mengelola daftar tugas dengan kategori tertentu.
+This project is a simple Todo List application built using CodeIgniter 4. The application allows users to manage task lists with specific categories.
 
-## 🛠️ Teknologi yang Digunakan
+## 🛠️ Technologies Used
 
-- **CodeIgniter 4** - Framework PHP
-- **Bootstrap 5.3.3** - Untuk tampilan UI
-- **jQuery** - Untuk manipulasi DOM
-- **SweetAlert2** - Untuk notifikasi dan konfirmasi
-- **DataTables (datatables.net-bs5)** - Untuk menampilkan data dalam bentuk tabel interaktif
+- **CodeIgniter 4** - PHP Framework
+- **Bootstrap 5.3.3** - For UI design
+- **jQuery** - For DOM manipulation
+- **SweetAlert2** - For notifications and confirmations
+- **DataTables (datatables.net-bs5)** - For displaying data in an interactive table format
 
-## 📂 Struktur Database
+## 📂 Database Structure
 
-Aplikasi ini menggunakan dua tabel utama:
+This application uses two main tables:
 
-### 1. **Tabel `categories`**
+### 1. **`categories` Table**
 
-Digunakan untuk menyimpan kategori tugas.
+Used to store task categories.
 
 ```sql
 id (INT, PRIMARY KEY, AUTO_INCREMENT)
@@ -26,73 +26,91 @@ name (VARCHAR 100, NOT NULL)
 created_at (TIMESTAMP, DEFAULT CURRENT_TIMESTAMP)
 ```
 
-### 2. **Tabel `tasks`**
+### 2. **`tasks` Table**
 
-Digunakan untuk menyimpan daftar tugas.
+Used to store the task list.
 
 ```sql
 id (INT, PRIMARY KEY, AUTO_INCREMENT)
 title (VARCHAR 255, NOT NULL)
 description (TEXT, NULL)
 due_date (DATE, NOT NULL)
-status (ENUM('Belum Selesai', 'Selesai'), DEFAULT 'Belum Selesai')
-category_id (INT, NULL, FOREIGN KEY ke categories.id)
+status (ENUM('Not Completed', 'Completed'), DEFAULT 'Not Completed')
+category_id (INT, NULL, FOREIGN KEY to categories.id)
 created_at (TIMESTAMP, DEFAULT CURRENT_TIMESTAMP)
 ```
 
-## ⚙️ Instalasi & Konfigurasi
+## ⚙️ Installation & Configuration
 
-1. **Clone repositori ini**
-   `sh
- git clone https://github.com/username/todo-list-ci4.git
- cd todo-list-ci4
- `
-2. **Install dependencies dengan Composer**
-   `sh
-composer install
-`
-3. **Konfigurasi `.env`**
-   - Ubah nama file `.env.example` menjadi `.env`
-   - Sesuaikan konfigurasi database:
-     `ini
-database.default.hostname = localhost
-database.default.database = nama_database
-database.default.username = root
-database.default.password =
-database.default.DBDriver = MySQLi
-`
-4. **Jalankan migrasi database**
-   `sh
-php spark migrate
-`
-5. **Jalankan seeder untuk mengisi data awal**
-   `sh
-php spark db:seed DatabaseSeeder
-`
-6. **Jalankan aplikasi**
-   `sh
-php spark serve
-`
-7. **Akses melalui browser**
-   `
-http://localhost:8080`
+1. **Clone this repository**
 
-## ✨ Fitur
+   ```sh
+   git clone https://github.com/RyanGA09/ci4-todolist-bootstrap.git
+   ```
 
-- Menambah, mengedit, dan menghapus tugas
-- Menyaring tugas berdasarkan kategori
-- Mengubah status tugas (Belum Selesai / Selesai)
-- Notifikasi menggunakan SweetAlert2
-- Tabel interaktif dengan DataTables
+   ```sh
+   cd todo-list-ci4
+   ```
 
-## 🖼️ Tampilan Aplikasi
+2. **Install dependencies using Composer**
 
-Aplikasi ini menggunakan Bootstrap 5 untuk tampilan modern dan responsif.
+   ```sh
+   composer install
+   ```
 
-## 📜 Lisensi
+3. **Configure `.env`**
 
-Proyek ini bersifat open-source dan bebas digunakan.
+   - Rename the file `.env.example` to `.env`
+   - Adjust the database configuration:
+
+     ```ini
+     database.default.hostname = localhost
+     database.default.database = database_name
+     database.default.username = root
+     database.default.password =
+     database.default.DBDriver = MySQLi
+     ```
+
+4. **Run database migration**
+
+   ```sh
+   php spark migrate
+   ```
+
+5. **Run the seeder to populate initial data**
+
+   ```sh
+   php spark db:seed DatabaseSeeder
+   ```
+
+6. **Start the application**
+
+   ```sh
+       php spark serve
+   ```
+
+7. **Access via browser**
+
+   ```
+           http://localhost:8080
+   ```
+
+## ✨ Features
+
+- Add, edit, and delete tasks
+- Filter tasks by category
+- Change task status (Not Completed / Completed)
+- Notifications using SweetAlert2
+- Interactive tables with DataTables
+
+## 🖼️ Application UI
+
+The application uses Bootstrap 5 for a modern and responsive design.
+
+## 📜 License
+
+This project is open-source and free to use.
 
 ---
 
-🚀 **Selamat mengembangkan!**
+🚀 **Happy coding!**
