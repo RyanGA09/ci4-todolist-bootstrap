@@ -23,9 +23,19 @@ class CreateTasks extends Migration
                 'type' => 'TEXT', 
                 'null' => true
             ],
+            'priority' => [
+                'type' => 'TINYINT',
+                'constraint' => 1,
+                'null' => false,
+                'default' => 3 // Default prioritas 3 (menengah)
+            ],
+            'created_at' => [
+                'type' => 'DATETIME', 
+                'null' => false, 
+            ],
             'due_date' => [
-                'type' => 'DATE', 
-                'null' => false
+                'type' => 'DATETIME',
+                'null' => true
             ],
             'status' => [
                 'type' => "ENUM('Not Completed', 'Completed')", 
@@ -35,10 +45,6 @@ class CreateTasks extends Migration
                 'type' => 'INT', 
                 'null' => true, 
                 'unsigned' => true
-            ],
-            'created_at'  => [
-                'type' => 'DATETIME', 
-                'null' => true, // Ubah menjadi null agar bisa diisi oleh CodeIgniter
             ]
         ]);
 
