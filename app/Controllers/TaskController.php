@@ -80,7 +80,7 @@ class TaskController extends ResourceController
 
         $data = $this->request->getPost();
         if ($this->taskModel->insert($data)) {
-            return $this->respondCreated(['message' => 'Task created successfully']);
+            return redirect()->to('/tasks')->with('success', 'Task created successfully');
         }
         return $this->failValidationErrors($this->taskModel->errors());
     }
@@ -106,7 +106,7 @@ class TaskController extends ResourceController
 
         $data = $this->request->getRawInput();
         if ($this->taskModel->update($id, $data)) {
-            return $this->respond(['message' => 'Task updated successfully']);
+            return redirect()->to('/tasks')->with('success', 'Task updated successfully');
         }
         return $this->failValidationErrors($this->taskModel->errors());
     }
@@ -117,9 +117,15 @@ class TaskController extends ResourceController
             return $this->failNotFound('Task ID is required');
         }
 
-        if ($this->taskModel->delete($id)) {
-            return $this->respondDeleted(['message' => 'Task deleted successfully']);
+        $task = $this->taskModel->find($id);
+        if (!$task) {
+            return $this->failNotFound('Task not found');
         }
-        return $this->failNotFound('Task not found');
+
+        if ($this->taskModel->delete($id)) {
+            return redirect()->to('/tasks')->with('success', 'Task deleted successfully');
+        }
+
+        return $this->fail('Failed to delete task');
     }
 }

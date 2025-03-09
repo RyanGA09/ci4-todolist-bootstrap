@@ -7,7 +7,12 @@
             </div>
             <div class="modal-body">
                 <p>Apakah Anda yakin ingin menghapus tugas ini?</p>
-                <button type="button" class="btn btn-danger confirm-delete">Hapus</button>
+                <form id="deleteTaskForm" action="" method="POST">
+                    <?= csrf_field() ?>
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="hidden" name="task_id" id="deleteTaskId">
+                    <button type="submit" class="btn btn-danger">Hapus</button>
+                </form>
             </div>
         </div>
     </div>

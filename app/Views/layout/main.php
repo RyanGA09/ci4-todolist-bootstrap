@@ -82,4 +82,19 @@
             $("#editTaskPriority").val(priority).change();
         });
     });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        let deleteTaskModal = document.getElementById("deleteTaskModal");
+
+        deleteTaskModal.addEventListener("show.bs.modal", function (event) {
+            let button = event.relatedTarget;
+            let taskId = button.getAttribute("data-id");
+
+            let deleteForm = document.getElementById("deleteTaskForm");
+            let deleteTaskId = document.getElementById("deleteTaskId");
+
+            deleteTaskId.value = taskId;
+            deleteForm.action = "/tasks/delete/" + taskId; 
+        });
+    });
 </script>
