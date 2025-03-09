@@ -22,7 +22,11 @@ class TaskController extends ResourceController
 
     public function index()
     {
-        $tasks = $this->taskModel->getTasks();
+        $tasks = $this->taskModel->select('tasks.*, categories.name as category_name, priorities.level as priority_level')
+            ->join('categories', 'categories.id = tasks.category_id', 'left')
+            ->join('priorities', 'priorities.id = tasks.priority_id', 'left')
+            ->findAll();
+
         $categories = $this->categoryModel->findAll();
         $priorities = $this->priorityModel->findAll();
 
@@ -39,7 +43,12 @@ class TaskController extends ResourceController
             return $this->failNotFound('Task ID is required');
         }
 
-        $task = $this->taskModel->getTaskById($id);
+        $task = $this->taskModel->select('tasks.*, categories.name as category_name, priorities.level as priority_level')
+            ->join('categories', 'categories.id = tasks.category_id', 'left')
+            ->join('priorities', 'priorities.id = tasks.priority_id', 'left')
+            ->where('tasks.id', $id)
+            ->first();
+
         if (!$task) {
             return $this->failNotFound('Task not found');
         }
@@ -57,7 +66,7 @@ class TaskController extends ResourceController
             'due_date'    => 'required|valid_date[Y-m-d H:i:s]',
             'status'      => 'required|in_list[Not Completed,Completed]',
             'category_id' => 'required|integer',
-            'priority'    => 'required|integer'
+            'priority_id' => 'required|integer'
         ];
 
         if (!$this->validate($rules)) {
@@ -83,7 +92,7 @@ class TaskController extends ResourceController
             'due_date'    => 'required|valid_date[Y-m-d H:i:s]',
             'status'      => 'required|in_list[Not Completed,Completed]',
             'category_id' => 'required|integer',
-            'priority'    => 'required|integer'
+            'priority_id' => 'required|integer'
         ];
 
         if (!$this->validate($rules)) {

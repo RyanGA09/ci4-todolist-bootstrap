@@ -8,39 +8,36 @@ class TaskSeeder extends Seeder
 {
     public function run()
     {
-        // Pastikan tabel priorities memiliki data terlebih dahulu
-        $this->call(PrioritySeeder::class);
-
-        $tasks = [
+        $data = [
             [
                 'title'       => 'Menyelesaikan laporan',
                 'description' => 'Menyusun laporan keuangan bulanan',
-                'priority'    => 1, // Prioritas tertinggi (Sangat Rendah)
-                'created_at'  => date('Y-m-d H:i:s'),
-                'due_date'    => date('Y-m-d H:i:s', strtotime('+3 days')), // Tenggat 3 hari
+                'due_date'    => '2024-03-15',
                 'status'      => 'Not Completed',
-                'category_id' => 1
+                'category_id' => 1,
+                'priority_id' => 1, // Sangat Mendesak
+                'created_at'  => date('Y-m-d H:i:s')
             ],
             [
                 'title'       => 'Belajar CodeIgniter 4',
                 'description' => 'Memahami konsep dasar dan membuat CRUD',
-                'priority'    => 3, // Prioritas menengah
-                'created_at'  => date('Y-m-d H:i:s'),
-                'due_date'    => date('Y-m-d H:i:s', strtotime('+7 days')), // Tenggat 7 hari
+                'due_date'    => '2024-03-20',
                 'status'      => 'Not Completed',
-                'category_id' => 2
+                'category_id' => 2,
+                'priority_id' => 2, // Penting
+                'created_at'  => date('Y-m-d H:i:s')
             ],
             [
                 'title'       => 'Olahraga Pagi',
                 'description' => 'Jogging selama 30 menit di taman',
-                'priority'    => 5, // Prioritas tertinggi (Sangat Tinggi)
-                'created_at'  => date('Y-m-d H:i:s'),
-                'due_date'    => date('Y-m-d H:i:s', strtotime('+1 days')), // Tenggat 1 hari
-                'status'      => 'Not Completed',
-                'category_id' => 3
+                'due_date'    => '2024-03-10',
+                'status'      => 'Completed',
+                'category_id' => 3,
+                'priority_id' => 4, // Biasa
+                'created_at'  => date('Y-m-d H:i:s')
             ]
         ];
 
-        $this->db->table('tasks')->insertBatch($tasks);
+        $this->db->table('tasks')->insertBatch($data);
     }
 }

@@ -10,30 +10,29 @@ class CreatePriorities extends Migration
     {
         $this->forge->addField([
             'id' => [
-                'type' => 'TINYINT',
-                'constraint' => 1,
+                'type' => 'INT',
+                'constraint' => 11,
                 'unsigned' => true,
                 'auto_increment' => true,
             ],
-            'name' => [
+            'priority_level' => [
+                'type' => 'INT',
+                'constraint' => 1,
+                'unsigned' => true,
+            ],
+            'description' => [
                 'type' => 'VARCHAR',
-                'constraint' => 50,
+                'constraint' => 255,
                 'null' => false,
+            ],
+            'created_at' => [
+                'type' => 'DATETIME',
+                'null' => true,
             ],
         ]);
 
         $this->forge->addKey('id', true);
         $this->forge->createTable('priorities');
-
-        // Insert default priority levels
-        $this->db->query("
-            INSERT INTO priorities (id, name) VALUES
-            (1, 'Sangat Rendah'),
-            (2, 'Rendah'),
-            (3, 'Menengah'),
-            (4, 'Tinggi'),
-            (5, 'Sangat Tinggi')
-        ");
     }
 
     public function down()

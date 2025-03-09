@@ -8,5 +8,5 @@ class PriorityModel extends Model
 {
     protected $table = 'priorities';
     protected $primaryKey = 'id';
-    protected $allowedFields = ['level'];
+    protected $allowedFields = ['priority_level', 'description', 'created_at'];
 }

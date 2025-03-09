@@ -8,24 +8,14 @@ class PrioritySeeder extends Seeder
 {
     public function run()
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table('priorities');
-
-        // Cek apakah tabel priorities sudah berisi data
-        if ($builder->countAllResults() > 0) {
-            echo "Priorities table already seeded.\n";
-            return;
-        }
-
         $data = [
-            ['id' => 1, 'name' => 'Sangat Rendah'],
-            ['id' => 2, 'name' => 'Rendah'],
-            ['id' => 3, 'name' => 'Menengah'],
-            ['id' => 4, 'name' => 'Tinggi'],
-            ['id' => 5, 'name' => 'Sangat Tinggi'],
+            ['priority_level' => 1, 'description' => 'Sangat Mendesak', 'created_at' => date('Y-m-d H:i:s')],
+            ['priority_level' => 2, 'description' => 'Penting', 'created_at' => date('Y-m-d H:i:s')],
+            ['priority_level' => 3, 'description' => 'Sedang', 'created_at' => date('Y-m-d H:i:s')],
+            ['priority_level' => 4, 'description' => 'Biasa', 'created_at' => date('Y-m-d H:i:s')],
+            ['priority_level' => 5, 'description' => 'Bisa Ditunda', 'created_at' => date('Y-m-d H:i:s')]
         ];
 
-        $builder->insertBatch($data);
+        $this->db->table('priorities')->insertBatch($data);
     }
-
 }

@@ -9,26 +9,26 @@ class CreateSubtasks extends Migration
     public function up()
     {
         $this->forge->addField([
-            'id'          => [
-                'type'           => 'INT',
-                'constraint'     => 11,
-                'unsigned'       => true,
+            'id' => [
+                'type' => 'INT',
+                'constraint' => 11,
+                'unsigned' => true,
                 'auto_increment' => true,
             ],
-            'task_id'     => [
-                'type'       => 'INT',
-                'constraint' => 11,
-                'unsigned'   => true,
+            'task_id' => [
+                'type' => 'INT',
+                'unsigned' => true,
             ],
-            'name'        => [
-                'type'       => 'VARCHAR',
+            'title' => [
+                'type' => 'VARCHAR',
                 'constraint' => 255,
+                'null' => false,
             ],
-            'created_at'  => [
-                'type' => 'DATETIME',
-                'null' => true,
+            'status' => [
+                'type' => "ENUM('Not Completed', 'Completed')",
+                'default' => 'Not Completed',
             ],
-            'updated_at'  => [
+            'created_at' => [
                 'type' => 'DATETIME',
                 'null' => true,
             ],
