@@ -23,10 +23,21 @@ Used to store task categories.
 ```sql
 id (INT, PRIMARY KEY, AUTO_INCREMENT)
 name (VARCHAR 100, NOT NULL)
-created_at (DATETIME, DEFAULT CURRENT_TIMESTAMP)
+created_at (DATETIME, NULL)
 ```
 
-### 2. **`tasks` Table**
+### 2. **`priorities` Table**
+
+Used to store task priorities.
+
+```sql
+id (INT, PRIMARY KEY, AUTO_INCREMENT)
+priority_level (INT, NOT NULL, 1 to 5)
+description (VARCHAR 255, NOT NULL)
+created_at (DATETIME, NULL)
+```
+
+### 3. **`tasks` Table**
 
 Used to store the task list.
 
@@ -34,10 +45,23 @@ Used to store the task list.
 id (INT, PRIMARY KEY, AUTO_INCREMENT)
 title (VARCHAR 255, NOT NULL)
 description (TEXT, NULL)
-due_date (DATE, NOT NULL)
+due_date (DATETIME, NOT NULL)
 status (ENUM('Not Completed', 'Completed'), DEFAULT 'Not Completed')
 category_id (INT, NULL, FOREIGN KEY to categories.id)
-created_at (DATETIME, DEFAULT CURRENT_TIMESTAMP)
+priority_id (INT, NULL, FOREIGN KEY to priorities.id)
+created_at (DATETIME, NULL)
+```
+
+### 4. **`subtasks` Table**
+
+Used to store subtasks for each task.
+
+```sql
+id (INT, PRIMARY KEY, AUTO_INCREMENT)
+task_id (INT, FOREIGN KEY to tasks.id)
+title (VARCHAR 255, NOT NULL)
+status (ENUM('Not Completed', 'Completed'), DEFAULT 'Not Completed')
+created_at (DATETIME, NULL)
 ```
 
 ## ⚙️ Installation & Configuration
@@ -100,6 +124,7 @@ created_at (DATETIME, DEFAULT CURRENT_TIMESTAMP)
 - Add, edit, and delete tasks
 - Filter tasks by category
 - Change task status (Not Completed / Completed)
+- Manage subtasks for each task
 - Notifications using SweetAlert2
 - Interactive tables with DataTables
 
@@ -112,7 +137,3 @@ The application uses Bootstrap 5 for a modern and responsive design.
 [MIT LICENSE](LICENSE)
 
 &copy;2025 Ryan Gading Abdullah. All rights reserved.
-
----
-
-🚀 **Happy coding!**
