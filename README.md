@@ -6,15 +6,15 @@ This project is a simple Todo List application built using CodeIgniter 4. The ap
 
 ## 🛠️ Technologies Used
 
-- **CodeIgniter 4** - PHP Framework
-- **Bootstrap 5.3.3** - For UI design
-- **jQuery** - For DOM manipulation
-- **SweetAlert2** - For notifications and confirmations
-- **DataTables (datatables.net-bs5)** - For displaying data in an interactive table format
+- 🧱 **CodeIgniter 4** - PHP Framework
+- 🎨 **Bootstrap 5.3.3** - For UI design
+- ✨ **jQuery** - For DOM manipulation
+- ⚠️ **SweetAlert2** - For notifications and confirmations
+- 📊 **DataTables (datatables.net-bs5)** - For displaying data in an interactive table format
 
 ## 📂 Database Structure
 
-This application uses two main tables:
+🗃️ This application uses two main tables:
 
 ### 1. **`categories` Table**
 
@@ -65,6 +65,8 @@ created_at (DATETIME, NULL)
 ```
 
 ## ⚙️ Installation & Configuration
+
+🔽 Follow these steps to install and run the app:
 
 1. **Clone this repository**
 
@@ -121,12 +123,12 @@ created_at (DATETIME, NULL)
 
 ## ✨ Features
 
-- Add, edit, and delete tasks
-- Filter tasks by category
-- Change task status (Not Completed / Completed)
-- Manage subtasks for each task
-- Notifications using SweetAlert2
-- Interactive tables with DataTables
+- ➕ Add, ✏️ edit, and 🗑️ delete tasks
+- 🔍 Filter tasks by category
+- ✅ Change task status (Not Completed / Completed)
+- 📌 Manage subtasks for each task
+- 🔔 Notifications using SweetAlert2
+- 📑 Interactive tables with DataTables
 
 ## 🖼️ Application UI
 
@@ -136,4 +138,4 @@ The application uses Bootstrap 5 for a modern and responsive design.
 
 [MIT LICENSE](LICENSE)
 
-&copy;2025 Ryan Gading Abdullah. All rights reserved.
+Copyright &copy;2025 Ryan Gading Abdullah. All rights reserved.
